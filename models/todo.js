@@ -31,7 +31,9 @@ class todoDB {
           todo_time: obj.todoTime,
           task_name: obj.taskName,
           todo_status: obj.task_status,
-          task_description: obj.taskDescription
+          task_description: obj.taskDescription,
+          client_id:obj.client_id
+
           
     }).then(data => {
           console.log("Added todo Task details", data)
