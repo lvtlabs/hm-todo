@@ -54,6 +54,16 @@ class todoDB {
           throw new Error('Error while getting data', err.message);
         });
       }
+
+
+      async clientToDoTasks(data){
+        return this.org_hm_todo.findAll({where:{client_id:data.clientId,todo_status:data.todo_status}}).then(rows => {
+          return rows;
+        }).catch((err) => {
+          console.log("Error while getting data", err);
+          throw new Error('Error while getting data', err.message);
+        });
+      }
       
     }
 module.exports=todoDB;
