@@ -16,6 +16,7 @@
     "logger": "0.0.1",
     "pg": "8.7.3",
     "sequelize": "6.19.0",
+    "supertest": "^6.2.4",
     "winston": "3.7.2"
   }
 }
