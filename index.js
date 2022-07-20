@@ -28,8 +28,10 @@ app.use(bodyParser.urlencoded({limit: '10mb', extended: true}))
 
 	});
 }
+
+//todo routes path
 app.use('/apk/v1/todo',todoRoutes);
-const PORT = process.env.NODEJS_NODEJSPORT || 23004;
+const PORT = process.env.NODEJS_NODEJSPORT || 3004;
   app.listen(PORT, function () {
     console.log('App is running at PORT' + PORT);
     //logger.info("Server started and running on http://localhost:"+ PORT)
