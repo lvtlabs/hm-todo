@@ -23,6 +23,10 @@ class todoDB {
         task_description: { type: DataTypes.STRING }
       }, DISABLE_SEQUELIZE_DEFAULTS)
 
+    task_status_table = sequelize.define('hm_task_status',{
+      uid: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+      todo_status: { type: DataTypes.STRING },
+    },DISABLE_SEQUELIZE_DEFAULTS)
 //posting task details to todo table
       async todoTaskDetails(obj) {
         return await this.org_hm_todo.create({
@@ -55,9 +59,36 @@ class todoDB {
         });
       }
 
+      async toDoTasksUpdateMarkAsDone(data) {
+        return await this.org_hm_todo.findOne({ where: { uid: data.uid } })
+      .then(function (task) {
+        if (task) {
+          return task.update({
+           todo_status:2
+          }).catch(function (err) {
+            // print the error details
+            console.log("Error while updating task", err);
+            throw new Error('Error while updating task', err.message);
+          });
+        }
+      }).catch(function (err) {
+        // print the error details
+        console.log("Error while updating task", err);
+        throw new Error('Error while finding task', err.message);
+      });
+      }
 
       async clientToDoTasks(data){
-        return this.org_hm_todo.findAll({where:{client_id:data.clientId,todo_status:data.todo_status}}).then(rows => {
+        return this.org_hm_todo.findAll({where:{client_id:data.clientId}}).then(rows => {
+          return rows;
+        }).catch((err) => {
+          console.log("Error while getting data", err);
+          throw new Error('Error while getting data', err.message);
+        });
+      }
+      
+      async getTodoStatus(){
+        return this.task_status_table.findAll().then(rows => {
           return rows;
         }).catch((err) => {
           console.log("Error while getting data", err);

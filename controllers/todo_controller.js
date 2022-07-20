@@ -83,3 +83,35 @@ exports.saveTodoTask = async function (req, res) {
       console.log("error while getting todo tasks")
     }
   }
+
+  exports.getTaskStatus = async (req,res)=>{
+    try{
+      const todoDB = new todoData();
+      let taskStatus = await Promise.resolve(todoDB.getTodoStatus()).catch(e => {
+        //logger.error('Error while getting toDotasks ', e)
+        return res.status(400).send({
+          errors: [{ title: 'Invalid  request', detail: e }]
+        });
+      });
+      //logger.info('todo tasks API worked successfully')
+      if(taskStatus){
+          return res.json(taskStatus);
+      }
+    }catch(e){
+      console.log("error while getting todo tasks")
+    }
+  }
+
+  exports.updateTaskMarkAsDone = async(req,res)=>{
+    try {
+      const todoDB = new todoData();
+      let isExist;
+      isExist = await Promise.resolve(todoDB.toDoTasksUpdateMarkAsDone(req.body))
+      if (isExist && Object.entries(isExist).length) {
+        return res.json({ 'updated': true, 'details': 'mark as done' });
+      } else {
+        return res.json({ 'updated': false, 'detail': 'error' });
+      }
+    } catch (e) {
+      return res.status(400).send({ errors: [{ title: 'Invalid  request', detail: e.message }] });
+  }
