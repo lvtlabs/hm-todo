@@ -78,8 +78,8 @@ class todoDB {
       });
       }
 
-      async clientToDoTasks(data){
-        return this.org_hm_todo.findAll({where:{client_id:data.clientId}}).then(rows => {
+      async clientToDoTasks(clientId){
+        return this.org_hm_todo.findAll({where:{client_id:clientId}}).then(rows => {
           return rows;
         }).catch((err) => {
           console.log("Error while getting data", err);
